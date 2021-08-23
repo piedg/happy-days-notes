@@ -1,18 +1,60 @@
-import React from "react";
-import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import React, { useState } from "react";
+import {
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  TouchableWithoutFeedback,
+  View,
+} from "react-native";
 import { Ionicons } from "@expo/vector-icons";
-import colors from "../utils/colors";
+import NoteInfoModal from "./NoteInfoModal";
+import { useDispatch } from "react-redux";
+import { deleteNoteById, fetchNoteById } from "../store/actions/handleNotes";
 
-export default function SingleNote(props) {
+const SingleNote = (props) => {
+  const [visible, setVisible] = useState(false);
+
+  const dispatch = useDispatch();
+
+
+  const openModal = (id) => {
+    setVisible(true);
+    dispatch(fetchNoteById(id));
+
+  };
+
+  const closeModal = () => {
+    setVisible(false);
+  };
+
+ /*  const deleteNote = (id) => {
+    dispatch(deleteNoteById(id))
+  } */
+  
   return (
     <View style={styles.container}>
-      <Text style={styles.text}>{props.text}</Text>
-      <TouchableOpacity style={styles.deleteButton} onPress={() => console.log("delete")}>
+      <NoteInfoModal
+        visible={visible}
+        closeModal={closeModal}
+        text={props.text}
+        time={props.time}
+        id={props.id}
+      />
+      <TouchableWithoutFeedback
+        onPress={() => openModal(props.id)}
+        title="apri modal"
+      >
+        <Text style={styles.text}>{props.text}</Text>
+      </TouchableWithoutFeedback>
+      <TouchableOpacity
+        style={styles.deleteButton}
+        onPress={props.deleteNote}
+      >
         <Ionicons name="remove-circle-outline" size={32} />
       </TouchableOpacity>
     </View>
   );
-}
+};
 
 const styles = StyleSheet.create({
   container: {
@@ -20,8 +62,8 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     marginVertical: 10,
     marginHorizontal: 15,
-    alignItems: 'center',
-    justifyContent: 'space-around'
+    alignItems: "center",
+    justifyContent: "space-around",
   },
   text: {
     width: "80%",
@@ -29,6 +71,8 @@ const styles = StyleSheet.create({
     alignItems: "center", // if you want to fill rows left to right
   },
   deleteButton: {
-    borderRadius: 50
-  }
+    borderRadius: 50,
+  },
 });
+
+export default SingleNote;

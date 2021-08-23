@@ -1,38 +1,39 @@
-import React from "react";
-import { ScrollView, StyleSheet, View } from "react-native";
-import colors from "../utils/colors";
+import React, { useEffect } from "react";
+import { ScrollView, StyleSheet, View, Text } from "react-native";
 import SingleNote from "./SingleNote";
+import { useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
+import { deleteNoteById } from "../store/actions/handleNotes";
 
-export default function App() {
+export default function NotesList(props) {
+  const listaNote = useSelector((state) => state.notes.notesList);
+  console.log(listaNote);
+  const dispatch = useDispatch();
+
+  const deleteNote = (id) => {
+    dispatch(deleteNoteById(id))
+  }
+
+  const renderNoteList = () => {
+    return listaNote.map((nota, index) => (
+      <SingleNote
+        key={index}
+        text={nota.text}
+        time={nota.time}
+        id={nota.id}
+        deleteNote={() => deleteNote(nota.id)}
+      />
+    ));
+  }
+ 
+
   return (
     <View style={styles.container}>
-      <ScrollView showsVerticalScrollIndicator={false}>
-        <SingleNote text={"ciao"}/>
-        <SingleNote text={"Sono una nota lunghissimaaaa"} />
-        <SingleNote text={"Sono una nota lunasdsadsadasghissimaaaa"} />
-        <SingleNote text={"Sono una nota lunasdsasimaaaa"} />
-        <SingleNote text={"Sono una nota lunasdsadsadasghissimaaaalunasdsadsadasghissimaaaa"} />
-        <SingleNote text={"Sono una nota lunasdsadsadasghissimaaaa"} />
-        <SingleNote text={"Sono una noaaa"} />
-        <SingleNote text={"Ssghissimaaaa"} />
-        <SingleNote text={"Sono una nota lunasdsadsadasghissimaaaa"} />
-        <SingleNote text={"Sono unddasdasdasdasa nota sghissimaaaa"} />
-        <SingleNote text={"Sono una nota sghissimaaaa"} />
-        <SingleNote text={"Sonasaso una nota adsadsadsada"} />
-        <SingleNote text={"Sono una nota sghissimaaaa"} />
-        <SingleNote text={"Sono una no sad sad asdsa dta sghissimaaaa"} />
-        <SingleNote text={"Sono una nota sghissimaaaa"} />
-        <SingleNote text={"Sono una nota s dasdasdasdasdasdghissimaaaa"} />
-        <SingleNote text={"Sono una nota sghissimaadsadasdasdasdsadsadsadasdaaasghissimaadsadasdasdasdsadsadsadasdaaa"} />
-        <SingleNote text={"Sono una nodddddasdta sghissimaaaa"} />
-
-    
-      </ScrollView>
+      <ScrollView showsVerticalScrollIndicator={false}>{renderNoteList()}</ScrollView>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
-  },
+  container: {},
 });
