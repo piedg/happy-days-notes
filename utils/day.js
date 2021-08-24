@@ -20,6 +20,18 @@ const weekDays = [
   "Giovedì",
   "Venerdì",
   "Sabato",
-  "Domenica",
 ];
-export { months, weekDays };
+
+const slicedWeekDays = [
+  "Dom",
+  "Lun",
+  "Mar",
+  "Mer",
+  "Gio",
+  "Ven",
+  "Sab",
+];
+
+
+
+export { months, weekDays, slicedWeekDays };

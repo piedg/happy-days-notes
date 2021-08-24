@@ -27,9 +27,6 @@ const SingleNote = (props) => {
     setVisible(false);
   };
 
- /*  const deleteNote = (id) => {
-    dispatch(deleteNoteById(id))
-  } */
   
   return (
     <View style={styles.container}>
@@ -68,7 +65,7 @@ const styles = StyleSheet.create({
   text: {
     width: "80%",
     fontSize: 16,
-    alignItems: "center", // if you want to fill rows left to right
+    alignItems: "center", 
   },
   deleteButton: {
     borderRadius: 50,

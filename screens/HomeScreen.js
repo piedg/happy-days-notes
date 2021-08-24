@@ -28,6 +28,7 @@ export default function Home() {
   const allNotes = useSelector((state) => state.notes.notesList);
 
   const date = new Date();
+  const formattedDate = date.getDate() + '-' + date.getMonth() + '-' + date.getFullYear()
   const weekDay = weekDays[date.getDay()];
   const today = weekDay + " " + date.getDate() + " " + months[date.getMonth()];
   const currentTime =
@@ -36,7 +37,7 @@ export default function Home() {
     date.getMinutes() +
     (9 < date.getSeconds() ? ":" : ":0") +
     date.getSeconds();
-  const nota = { text, time, id, creation_date: date };
+  const nota = { text, time, id, creation_date: date.toString().slice(0,15) };
 
   const inputHandler = (value) => {
     setText(value);
