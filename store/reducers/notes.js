@@ -23,15 +23,16 @@ const notes = (state = initialState, action) => {
       };
 
     case UPDATE_NOTE:
+      noteIndex = state.notesList.findIndex((obj => obj.id == action.id));
+      state.notesList[noteIndex].text = action.text
       return {
         ...state,
-        note: { text: action.text },
-      };
+        notesList: state.notesList
+      }
 
     case DELETE_NOTE:
-      //tramutare in foreach
-      for (var i = 0; i < state.notesList.length; i++) {
-        if (state.notesList[i].id === action.id) {
+      for (let x in state.notesList) {
+        if (state.notesList[x].id === action.id) {
           return {
             ...state,
             notesList: state.notesList.filter((el) => el.id !== action.id),

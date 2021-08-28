@@ -16,14 +16,18 @@ import { months, weekDays } from "../utils/day";
 import { useSelector, useDispatch } from "react-redux";
 import { addNote } from "../store/actions/handleNotes";
 import uuid from "react-uuid";
-import { notesObj } from "../model/notes";
 
 export default function Home() {
   const [text, setText] = useState("");
 
   const dispatch = useDispatch();
 
-  const allNotes = useSelector((state) => state.notes.notesList);
+  useEffect(() => {
+  });
+
+  const renderNotesList = (allNotes) => {
+    return <NotesList />;
+  };
 
   const date = new Date();
   const formattedDate =
@@ -32,11 +36,7 @@ export default function Home() {
   const weekDay = weekDays[date.getDay()];
   const today = weekDay + " " + date.getDate() + " " + months[date.getMonth()];
   const currentTime =
-    date.getHours() +
-    (9 < date.getMinutes() ? ":" : ":0") +
-    date.getMinutes() +
-    (9 < date.getSeconds() ? ":" : ":0") +
-    date.getSeconds();
+    date.getHours() + (9 < date.getMinutes() ? ":" : ":0") + date.getMinutes();
 
   const nota = {
     text,
@@ -65,17 +65,13 @@ export default function Home() {
     console.log("FOUND", found);
   };
 
-
-
   return (
     <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
       <View style={styles.container}>
         <View style={styles.titleContainer}>
           <Text style={styles.title}>{today}</Text>
         </View>
-        <View style={styles.noteContainer}>
-          <NotesList data={allNotes} />
-        </View>
+        <View style={styles.noteContainer}>{renderNotesList()}</View>
         <KeyboardAvoidingView
           style={styles.outInputContainer}
           enabled={Platform.OS === "ios" ? true : false}

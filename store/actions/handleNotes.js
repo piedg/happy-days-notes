@@ -1,6 +1,7 @@
 export const ADD_NOTE = "ADD_NOTE";
 export const FETCH_NOTE_BY_ID = "FETCH_NOTE_BY_ID";
 export const DELETE_NOTE = "DELETE_NOTE";
+export const UPDATE_NOTE = "UPDATE_NOTE"
 
 export const addNote = (note) => ({
   type: ADD_NOTE,
@@ -12,10 +13,10 @@ export const fetchNoteById = (id) => ({
   id,
 });
 
-export const updateNote = (text, update_date) => ({
+export const updateNote = (text, id) => ({
   type: UPDATE_NOTE,
-  update_date,
   text,
+  id
 });
 
 export const deleteNoteById = (id) => ({

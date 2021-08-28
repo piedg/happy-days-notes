@@ -14,6 +14,12 @@ export default function NotesList() {
     dispatch(deleteNoteById(id));
   };
 
+
+  useEffect(() => {
+    
+  }, [])
+
+
   const renderList = listaNote.map((nota, index) =>
       <SingleNote
         key={index}
@@ -22,7 +28,7 @@ export default function NotesList() {
         id={nota.id}
         deleteNote={() => deleteNote(nota.id)}
       />
-    )
+    ) 
 
   return (
     <View style={styles.container}>

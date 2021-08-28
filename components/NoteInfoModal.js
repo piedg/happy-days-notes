@@ -1,22 +1,26 @@
 import React, { useState } from "react";
 import { Text, Modal, Button, StyleSheet, View, TextInput } from "react-native";
+import { useDispatch } from "react-redux";
+import { updateNote } from "../store/actions/handleNotes";
 
 const NoteInfoModal = (props) => {
   const [newText, setNewText] = useState(props.text);
-  //props.id
+
+  const dispatch = useDispatch()
 
   const handleText = (value) => {
     setNewText(value);
   };
 
-  const updateNote = () => {
+  const updateNoteFun = () => {
     console.log("newText: " + newText + " props.text: " + props.text)
+    dispatch(updateNote(newText, props.id))
   }
 
   const closeAndSave = () => {
     props.closeModal();
     if (newText.trim() !== props.text.trim()) {
-      updateNote();
+      updateNoteFun();
     }
   };
 
