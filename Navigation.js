@@ -40,7 +40,7 @@ export default function Navigation() {
             headerTitle: "Happy Days 🌻",
           })}
         />
-        <Stack.Screen name="Giorno X" component={SavedDay} />
+        <Stack.Screen options={{headerTitle: "Note Salvate 🌈" }} name="SavedDay" component={SavedDay} />
         <Stack.Screen
           options={{ headerTitle: "Seleziona giorno 🗓" }}
           name="CalendarPickerComponent"
