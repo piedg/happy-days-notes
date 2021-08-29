@@ -1,14 +1,21 @@
 import React, { Component } from "react";
 import CalendarPicker from "react-native-calendar-picker";
 import colors from "../utils/colors";
-import { months, slicedWeekDays } from "../utils/day";
+import { months, slicedWeekDays, weekDays } from "../utils/day";
 import { useSelector } from "react-redux";
 import { StyleSheet, View } from "react-native";
+
 const CalendarPickerComponent = (props) => {
   const allNotes = useSelector((state) => state.notes.notesList);
 
   const dateHandle = (date) => {
     const formattedData = date.toString().slice(0, 15);
+
+    const newDate = new Date(date)
+    const weekDay = weekDays[newDate.getDay()];
+    const today = weekDay + " " + newDate.getDate() + " " + months[newDate.getMonth()];
+   
+    console.log("Nuova data", today)
 
     const filterArr = [];
     allNotes.filter((el) => {
@@ -16,7 +23,7 @@ const CalendarPickerComponent = (props) => {
         filterArr.push(el);
       }
     });
-    props.navigation.navigate("SavedDay", { data: filterArr });
+    props.navigation.navigate("SavedDay", { data: filterArr, title: today});
   };
 
   return (

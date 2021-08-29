@@ -34,6 +34,7 @@ export default function Home() {
     time: currentTime,
     id: uuid(),
     creation_date: date.toString().slice(0, 15),
+    formatted_date: today,
   };
 
   const inputHandler = (value) => {
@@ -44,13 +45,11 @@ export default function Home() {
     if (!text || text.trim() === "") {
       return alert("Inserisci testo");
     }
-
     dispatch(addNote(nota));
-
     Keyboard.dismiss();
     setText("");
   };
-
+  console.log(text.length);
   return (
     <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
       <View style={styles.container}>
@@ -58,7 +57,7 @@ export default function Home() {
           <Text style={styles.title}>{today}</Text>
         </View>
         <View style={styles.noteContainer}>
-          <NotesList notesData={listaNote}/>
+          <NotesList notesData={listaNote} />
         </View>
         <KeyboardAvoidingView
           style={styles.outInputContainer}
@@ -67,10 +66,12 @@ export default function Home() {
         >
           <View style={styles.inputContainer}>
             <TextInput
+              multiline={true}
               style={styles.input}
-              placeholder="Nota"
+              placeholder="Cos'è successo di bello?"
               onChangeText={inputHandler}
               value={text}
+              underlineColorAndroid="transparent"
             />
             <TouchableOpacity onPress={addNewNote} style={styles.addButton}>
               <Ionicons name="add-circle-outline" size={40} />
@@ -104,14 +105,25 @@ const styles = StyleSheet.create({
     bottom: Platform.OS === "ios" ? 60 : 0,
     left: 0,
     right: 0,
-    padding: 10,
+    padding: 8,
   },
   inputContainer: {
     flexDirection: "row",
-    padding: 10,
-    borderRadius: 50,
-    borderWidth: 1,
     backgroundColor: "#eee",
   },
-  input: { width: "90%", fontSize: 18 },
+  input: {
+    paddingTop: 10, 
+    paddingHorizontal: 25,
+    paddingBottom: 10,
+    borderWidth: 1,
+    borderRadius: 50,
+    width: "90%",
+    fontSize: 18,
+    marginRight: 5,
+  },
+  addButton: {
+    position: 'absolute',
+    bottom: 0,
+    right: 0
+  }
 });

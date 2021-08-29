@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Text, Modal, Button, StyleSheet, View, TextInput } from "react-native";
+import { Text, Modal, Button, StyleSheet, View, TextInput, TouchableWithoutFeedback } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
 import { updateNote } from "../store/actions/handleNotes";
 import colors from "../utils/colors";
@@ -27,6 +27,7 @@ const NoteInfoModal = (props) => {
 
   return (
     <Modal visible={props.visible} animationType={"fade"}>
+      <TouchableWithoutFeedback onPress={closeAndSave}>
       <View style={styles.container}>
         <Text>salvato alle: {props.time}</Text>
         <TextInput
@@ -35,13 +36,8 @@ const NoteInfoModal = (props) => {
           onChangeText={handleText}
           multiline={true}
         />
-        <Button
-          color={colors.accentColor}
-          style={styles.closeButton}
-          onPress={closeAndSave}
-          title="chiudi"
-        />
       </View>
+      </TouchableWithoutFeedback>
     </Modal>
   );
 };

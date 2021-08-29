@@ -37,16 +37,16 @@ export default function Navigation() {
                 />
               </TouchableOpacity>
             ),
-            headerTitle: "Happy Days 🌻",
+            headerTitle: "Happy Moments",
           })}
         />
         <Stack.Screen
-          options={{ headerTitle: "Note Salvate 🌈" }}
+          options={{ headerTitle: "Note Salvate" }}
           name="SavedDay"
           component={SavedDay}
         />
         <Stack.Screen
-          options={{ headerTitle: "Seleziona giorno 🗓" }}
+          options={{ headerTitle: "Seleziona giorno" }}
           name="CalendarPickerComponent"
           component={CalendarPickerComponent}
         />
