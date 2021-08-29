@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Text, Modal, Button, StyleSheet, View, TextInput } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
 import { updateNote } from "../store/actions/handleNotes";
+import colors from "../utils/colors";
 
 const NoteInfoModal = (props) => {
   const noteData = useSelector((state) => state.noteData);
@@ -34,7 +35,12 @@ const NoteInfoModal = (props) => {
           onChangeText={handleText}
           multiline={true}
         />
-        <Button onPress={closeAndSave} title="chiudi" />
+        <Button
+          color={colors.accentColor}
+          style={styles.closeButton}
+          onPress={closeAndSave}
+          title="chiudi"
+        />
       </View>
     </Modal>
   );
