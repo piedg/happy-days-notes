@@ -25,7 +25,7 @@ export default function App() {
   return (
     <Provider store={store}>
       <PersistGate loading={null} persistor={persistor}>
-        <StatusBar style={"light-content"} backgroundColor={colors.primaryColor} translucent={true}  />
+        <StatusBar style={"light"} backgroundColor={colors.primaryColor} translucent={true} />
         <Navigation />
       </PersistGate>
     </Provider>
