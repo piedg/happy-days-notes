@@ -1,25 +1,25 @@
 import React, { useState } from "react";
 import { Text, Modal, Button, StyleSheet, View, TextInput } from "react-native";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { updateNote } from "../store/actions/handleNotes";
 
 const NoteInfoModal = (props) => {
+  const noteData = useSelector((state) => state.noteData);
   const [newText, setNewText] = useState(props.text);
 
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
 
   const handleText = (value) => {
     setNewText(value);
   };
 
   const updateNoteFun = () => {
-    console.log("newText: " + newText + " props.text: " + props.text)
-    dispatch(updateNote(newText, props.id))
-  }
+    dispatch(updateNote(newText, props.id));
+  };
 
   const closeAndSave = () => {
     props.closeModal();
-    if (newText.trim() !== props.text.trim()) {
+    if (newText.trim() !== props.text.trim() && newText.trim !== "") {
       updateNoteFun();
     }
   };
@@ -27,7 +27,7 @@ const NoteInfoModal = (props) => {
   return (
     <Modal visible={props.visible} animationType={"fade"}>
       <View style={styles.container}>
-      <Text>salvato alle: {props.time}</Text>
+        <Text>salvato alle: {props.time}</Text>
         <TextInput
           style={styles.textInput}
           value={newText}

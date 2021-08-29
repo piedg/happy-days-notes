@@ -1,10 +1,13 @@
-import { ADD_NOTE, FETCH_ALL_NOTES } from "../actions/handleNotes";
-import { FETCH_NOTE_BY_ID } from "../actions/handleNotes";
-import { DELETE_NOTE } from "../actions/handleNotes";
-import { UPDATE_NOTE } from "../actions/handleNotes";
+import {
+  ADD_NOTE,
+  FETCH_NOTE_BY_ID,
+  DELETE_NOTE,
+  UPDATE_NOTE,
+} from "../actions/handleNotes";
 
 const initialState = {
   notesList: [],
+  notesFilteredByDate: [],
   note: {},
 };
 
@@ -14,21 +17,24 @@ const notes = (state = initialState, action) => {
       return {
         ...state,
         notesList: [...state.notesList, action.note],
+        note: state.note,
       };
 
     case FETCH_NOTE_BY_ID:
       return {
         ...state,
+        notesList: [...state.notesList],
         note: state.notesList.filter((el) => el.id === action.id),
       };
 
     case UPDATE_NOTE:
-      noteIndex = state.notesList.findIndex((obj => obj.id == action.id));
-      state.notesList[noteIndex].text = action.text
+      noteIndex = state.notesList.findIndex((obj) => obj.id === action.id);
+      state.notesList[noteIndex].text = action.text;
       return {
         ...state,
-        notesList: state.notesList
-      }
+        notesList: [...state.notesList],
+        note: state.note,
+      };
 
     case DELETE_NOTE:
       for (let x in state.notesList) {
@@ -40,9 +46,10 @@ const notes = (state = initialState, action) => {
           };
         }
       }
-  }
 
-  return state;
+    default:
+      return state;
+  }
 };
 
 export default notes;

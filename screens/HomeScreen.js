@@ -13,26 +13,17 @@ import {
 import NotesList from "../components/NotesList";
 import { Ionicons } from "@expo/vector-icons";
 import { months, weekDays } from "../utils/day";
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { addNote } from "../store/actions/handleNotes";
 import uuid from "react-uuid";
 
 export default function Home() {
   const [text, setText] = useState("");
 
+  const listaNote = useSelector((state) => state.notes.notesList);
   const dispatch = useDispatch();
 
-  useEffect(() => {
-  });
-
-  const renderNotesList = (allNotes) => {
-    return <NotesList />;
-  };
-
   const date = new Date();
-  const formattedDate =
-    date.getDate() + "-" + date.getMonth() + "-" + date.getFullYear();
-
   const weekDay = weekDays[date.getDay()];
   const today = weekDay + " " + date.getDate() + " " + months[date.getMonth()];
   const currentTime =
@@ -60,18 +51,15 @@ export default function Home() {
     setText("");
   };
 
-  const filterById = (id) => {
-    const found = allNotes.filter((el) => el.id === id);
-    console.log("FOUND", found);
-  };
-
   return (
     <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
       <View style={styles.container}>
         <View style={styles.titleContainer}>
           <Text style={styles.title}>{today}</Text>
         </View>
-        <View style={styles.noteContainer}>{renderNotesList()}</View>
+        <View style={styles.noteContainer}>
+          <NotesList notesData={listaNote}/>
+        </View>
         <KeyboardAvoidingView
           style={styles.outInputContainer}
           enabled={Platform.OS === "ios" ? true : false}

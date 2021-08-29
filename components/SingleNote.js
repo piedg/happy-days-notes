@@ -9,7 +9,7 @@ import {
 import { Ionicons } from "@expo/vector-icons";
 import NoteInfoModal from "./NoteInfoModal";
 import { useDispatch } from "react-redux";
-import { deleteNoteById, fetchNoteById } from "../store/actions/handleNotes";
+import { fetchNoteById } from "../store/actions/handleNotes";
 
 const SingleNote = (props) => {
   const [visible, setVisible] = useState(false);
@@ -20,7 +20,6 @@ const SingleNote = (props) => {
   const openModal = (id) => {
     setVisible(true);
     dispatch(fetchNoteById(id));
-
   };
 
   const closeModal = () => {
