@@ -4,7 +4,7 @@ import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import Home from "./screens/HomeScreen";
 import SavedDay from "./screens/SavedDayScreen";
-import CalendarPickerComponent from "./components/CalendarPickerComponent";
+import CalendarScreen from "./screens/CalendarScreen";
 import colors from "./utils/colors";
 import { Ionicons } from "@expo/vector-icons/build/Icons";
 
@@ -26,7 +26,7 @@ export default function Navigation() {
           options={({ navigation }) => ({
             headerRight: () => (
               <TouchableOpacity
-                onPress={() => navigation.navigate("CalendarPickerComponent")}
+                onPress={() => navigation.navigate("CalendarScreen")}
               >
                 <Ionicons
                   name="calendar-outline"
@@ -47,8 +47,8 @@ export default function Navigation() {
         />
         <Stack.Screen
           options={{ headerTitle: "Seleziona giorno" }}
-          name="CalendarPickerComponent"
-          component={CalendarPickerComponent}
+          name="CalendarScreen"
+          component={CalendarScreen}
         />
       </Stack.Navigator>
     </NavigationContainer>

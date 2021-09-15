@@ -1,29 +1,20 @@
-import React, { useEffect } from "react";
-import { StyleSheet, View, Text } from "react-native";
+import React from "react";
+import { View, Text } from "react-native";
+import savedDay from "../styles/savedDayStyle";
 import NotesList from "../components/NotesList";
+import { useSelector } from "react-redux";
 
-export default function SavedDayScreen({ route, title }) {
-  const savedList = route.params.data;
+export default function SavedDayScreen({ route }) {
+  const savedNotesList = useSelector((state) => state.notes.savedNotes);
 
-  console.log("logg", title)
-  useEffect(() => {}, []);
+  const handleSwipeLeft = () => {
+    console.log("Swipe left");
+  };
 
   return (
-    <View style={styles.noteContainer}>
-      <Text style={styles.title}>{route.params.title}</Text>
-      <NotesList notesData={savedList} />
+    <View style={savedDay.noteContainer}>
+      <Text style={savedDay.title}>{route.params.title}</Text>
+      <NotesList notesData={savedNotesList} />
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  noteContainer: {
-    height: "80%",
-    paddingVertical: 15,
-  },
-  title: {
-    alignSelf: 'center',
-    color: "#000",
-    fontSize: 25,
-  },
-});

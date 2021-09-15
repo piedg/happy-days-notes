@@ -5,7 +5,6 @@ import { updateNote } from "../store/actions/handleNotes";
 import colors from "../utils/colors";
 
 const NoteInfoModal = (props) => {
-  const noteData = useSelector((state) => state.noteData);
   const [newText, setNewText] = useState(props.text);
 
   const dispatch = useDispatch();

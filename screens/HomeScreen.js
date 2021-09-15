@@ -1,15 +1,15 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import {
-  StyleSheet,
   Text,
   TextInput,
   TouchableOpacity,
   View,
   Keyboard,
   KeyboardAvoidingView,
-  Platform,
   TouchableWithoutFeedback,
+  Platform,
 } from "react-native";
+import homeStyle from "../styles/homeStyle";
 import NotesList from "../components/NotesList";
 import { Ionicons } from "@expo/vector-icons";
 import { months, weekDays } from "../utils/day";
@@ -17,8 +17,11 @@ import { useDispatch, useSelector } from "react-redux";
 import { addNote } from "../store/actions/handleNotes";
 import uuid from "react-uuid";
 
-export default function Home() {
+const Home = () => {
   const [text, setText] = useState("");
+
+  const input = text.length > 0 ? homeStyle.input : homeStyle.inputFullWidth;
+  const btn = text.length > 0 ? homeStyle.addButton : homeStyle.addButtonHidden;
 
   const listaNote = useSelector((state) => state.notes.notesList);
   const dispatch = useDispatch();
@@ -49,81 +52,49 @@ export default function Home() {
     Keyboard.dismiss();
     setText("");
   };
-  console.log(text.length);
+
+  const filterByDay = (listaNote) => {
+    const formattedData = date.toString().slice(0, 15);
+    const filterArr = [];
+    listaNote.filter((el) => {
+      if (el.creation_date === formattedData) {
+        filterArr.push(el);
+      }
+    });
+    return filterArr;
+  };
+
   return (
     <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
-      <View style={styles.container}>
-        <View style={styles.titleContainer}>
-          <Text style={styles.title}>{today}</Text>
+      <View style={homeStyle.container}>
+        <View style={homeStyle.titleContainer}>
+          <Text style={homeStyle.title}>{today}</Text>
         </View>
-        <View style={styles.noteContainer}>
-          <NotesList notesData={listaNote} />
+        <View style={homeStyle.noteContainer}>
+          <NotesList notesData={filterByDay(listaNote)} />
         </View>
         <KeyboardAvoidingView
-          style={styles.outInputContainer}
-          enabled={Platform.OS === "ios" ? true : false}
+          style={homeStyle.inputContainer}
+          enabled={Platform.OS === 'ios' ? true : false}
           behavior={"position"}
         >
-          <View style={styles.inputContainer}>
             <TextInput
               multiline={true}
-              style={styles.input}
+              style={input}
               placeholder="Cos'è successo di bello?"
               onChangeText={inputHandler}
               value={text}
               underlineColorAndroid="transparent"
             />
-            <TouchableOpacity onPress={addNewNote} style={styles.addButton}>
+            <TouchableOpacity onPress={addNewNote} style={btn}>
               <Ionicons name="add-circle-outline" size={40} />
             </TouchableOpacity>
-          </View>
         </KeyboardAvoidingView>
       </View>
     </TouchableWithoutFeedback>
   );
-}
+};
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
-  noteContainer: {
-    height: "80%",
-    paddingVertical: 15,
-  },
-  titleContainer: {
-    padding: 15,
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  title: {
-    color: "#000",
-    fontSize: 25,
-  },
-  outInputContainer: {
-    position: "absolute",
-    bottom: Platform.OS === "ios" ? 60 : 0,
-    left: 0,
-    right: 0,
-    padding: 8,
-  },
-  inputContainer: {
-    flexDirection: "row",
-    backgroundColor: "#eee",
-  },
-  input: {
-    paddingTop: 10, 
-    paddingHorizontal: 25,
-    paddingBottom: 10,
-    borderWidth: 1,
-    borderRadius: 50,
-    width: "90%",
-    fontSize: 18,
-    marginRight: 5,
-  },
-  addButton: {
-    position: 'absolute',
-    bottom: 0,
-    right: 0
-  }
-});
+
+
+export default Home;

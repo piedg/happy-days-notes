@@ -16,7 +16,6 @@ const SingleNote = (props) => {
 
   const dispatch = useDispatch();
 
-
   const openModal = (id) => {
     setVisible(true);
     dispatch(fetchNoteById(id));
